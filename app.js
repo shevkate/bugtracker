@@ -3,7 +3,9 @@ const config = require("config");
 const mongoose = require('mongoose');
 const app = express();
 
-app.get()
+app.get('/', (req, res) => {
+    res.send('This is homepage')
+});
 
 const PORT = config.get('port')|| 3000;
 
