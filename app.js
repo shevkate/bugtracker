@@ -3,6 +3,8 @@ const config = require("config");
 const mongoose = require('mongoose');
 const app = express();
 
+app.get()
+
 const PORT = config.get('port')|| 3000;
 
 async function start() {
