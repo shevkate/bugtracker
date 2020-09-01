@@ -2,8 +2,8 @@ const {Router} = require('express');
 const User = require('../mongo_models/User');
 const router = Router();
 
-// /api/authent/register
-router.post('/signup', async (req, res) => {
+// register route
+router.post('/register', async (req, res) => {
     try {
         const {name, email, password} = req.body
     }catch(e){
@@ -11,10 +11,9 @@ router.post('/signup', async (req, res) => {
     }
 
 
-
 });
 
-router.post('/signin', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const {name, email, password} = req.body
     }catch(e){
