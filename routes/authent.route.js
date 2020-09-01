@@ -5,7 +5,15 @@ const router = Router();
 // register route
 router.post('/register', async (req, res) => {
     try {
-        const {name, email, password} = req.body
+        const {name, email, password} = req.body;
+
+        const applicantUser = User.findOne({email:email});
+
+        if(applicantUser) {
+            res.status(400).json({message: 'This user already exists!'})
+        }
+
+
     }catch(e){
         res.status(500).json({message: 'Something went wrong!'})
     }
