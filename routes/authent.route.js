@@ -2,8 +2,19 @@ const {Router} = require('express');
 const User = require('../mongo_models/User');
 const router = Router();
 const bcrypt = require('bcryptjs');
+const {check, validationResult } = require('express-validator');
+
+
 // register route
-router.post('/register', async (req, res) => {
+router.post('/register',
+
+    [
+        check('name', 'Provide valid name').not().isEmpty(),
+        check('email', 'Incorrect email').isEmail(),
+        check('password', 'Password minimum length is 8 symbols').isLength({min:8})
+    ],
+
+    async (req, res) => {
     try {
         const {name, email, password} = req.body;
 
