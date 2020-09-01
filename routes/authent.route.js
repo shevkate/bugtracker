@@ -16,11 +16,18 @@ router.post('/register',
 
     async (req, res) => {
     try {
+        const result = validationResult(req);
+        const hasErrors = !result.isEmpty();
+        if (hasErrors) {
+            return res.status(400).json({errors: result.array(),
+                message: 'Invalid data while registration!'})
+        }
+
         const {name, email, password} = req.body;
 
         const applicantUser = await User.findOne({email:email});
 
-        if(applicantUser) {
+        if (applicantUser) {
            return  res.status(400).json({message: 'This user already exists!'})
         }
 
