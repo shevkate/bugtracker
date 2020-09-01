@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const User = require('../mongo_models/User');
 const router = Router();
-
+const bcrypt = require('bcryptjs');
 // register route
 router.post('/register', async (req, res) => {
     try {
@@ -10,8 +10,10 @@ router.post('/register', async (req, res) => {
         const applicantUser = User.findOne({email:email});
 
         if(applicantUser) {
-            res.status(400).json({message: 'This user already exists!'})
+           return  res.status(400).json({message: 'This user already exists!'})
         }
+
+        const cryptedPassword = bcrypt.hash(password, 5);
 
 
     }catch(e){
