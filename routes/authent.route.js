@@ -45,9 +45,22 @@ router.post('/register',
 
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login',
+    [
+        check('name', 'Provide valid name').not().isEmpty(),
+        check('email', 'Provide correct email').isEmail(),
+        check('password', 'Provide your password').exists()
+    ],
+
+    async (req, res) => {
     try {
-        const {name, email, password} = req.body
+        const result = validationResult(req);
+        const hasErrors = !result.isEmpty();
+        if (hasErrors) {
+            return res.status(400).json({errors: result.array(),
+                message: 'Invalid data while registration!'})
+        }
+
     }catch(e){
         res.status(500).json({message: 'Something went wrong!'})
     }
