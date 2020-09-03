@@ -61,6 +61,13 @@ router.post('/login',
                 message: 'Invalid data while registration!'})
         }
 
+        const {name, email, password} = req.body;
+
+        const user = await User.findOne({email:email});
+        if (!user) {
+            return res.status(400).json({message:'User nor found!'})
+        }
+
     }catch(e){
         res.status(500).json({message: 'Something went wrong!'})
     }
