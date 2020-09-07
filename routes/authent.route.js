@@ -68,6 +68,11 @@ router.post('/login',
             return res.status(400).json({message:'User nor found!'})
         }
 
+        const matchingPassword = bcrypt.compare(password, user.password);
+        if (!matchingPassword) {
+            return res.status(400).json({message: 'Password is wrong!'})
+        }
+
     }catch(e){
         res.status(500).json({message: 'Something went wrong!'})
     }
