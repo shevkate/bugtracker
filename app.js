@@ -3,7 +3,7 @@ const config = require("config");
 const mongoose = require('mongoose');
 const app = express();
 
-app.use('/home', require('..bugtracker/routes/authent.routes'));
+app.use('/home', require('../bugtracker/routes/authent.routes'));
 
 const PORT = config.get('port')|| 3000;
 
