@@ -3,6 +3,8 @@ const User = require('../mongo_models/User');
 const router = Router();
 const bcrypt = require('bcryptjs');
 const {check, validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 
 // register route
@@ -68,10 +70,18 @@ router.post('/login',
             return res.status(400).json({message:'User nor found!'})
         }
 
-        const matchingPassword = bcrypt.compare(password, user.password);
+        const matchingPassword = await bcrypt.compare(password, user.password);
         if (!matchingPassword) {
             return res.status(400).json({message: 'Password is wrong!'})
         }
+
+        const payload = {
+            id: user.id,
+            name: user.name,
+            email: user.email
+        };
+        const token = jwt.sign(payload, config.get('accessTokenSecret'), {expiresIn: '1h'});
+        res.status(200).json({token, id:user.id})
 
     }catch(e){
         res.status(500).json({message: 'Something went wrong!'})
